@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sbs.barcode.mapper.TicketRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.sbs.barcode.pojo.TicketRecord" >
+    <id column="barcode" property="barcode" jdbcType="VARCHAR" />
+    <id column="enter_date" property="enterDate" jdbcType="TIMESTAMP" />
+    <result column="enter_address" property="enterAddress" jdbcType="VARCHAR" />
+    <result column="exit_date" property="exitDate" jdbcType="TIMESTAMP" />
+    <result column="exit_address" property="exitAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    barcode, enter_date, enter_address, exit_date, exit_address
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sbs.barcode.pojo.TicketRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ticket_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.sbs.barcode.pojo.TicketRecordKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ticket_record
+    where barcode = #{barcode,jdbcType=VARCHAR}
+      and enter_date = #{enterDate,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.sbs.barcode.pojo.TicketRecordKey" >
+    delete from ticket_record
+    where barcode = #{barcode,jdbcType=VARCHAR}
+      and enter_date = #{enterDate,jdbcType=TIMESTAMP}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sbs.barcode.pojo.TicketRecordExample" >
+    delete from ticket_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sbs.barcode.pojo.TicketRecord" >
+    insert into ticket_record (barcode, enter_date, enter_address, 
+      exit_date, exit_address)
+    values (#{barcode,jdbcType=VARCHAR}, #{enterDate,jdbcType=TIMESTAMP}, #{enterAddress,jdbcType=VARCHAR}, 
+      #{exitDate,jdbcType=TIMESTAMP}, #{exitAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sbs.barcode.pojo.TicketRecord" >
+    insert into ticket_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="barcode != null" >
+        barcode,
+      </if>
+      <if test="enterDate != null" >
+        enter_date,
+      </if>
+      <if test="enterAddress != null" >
+        enter_address,
+      </if>
+      <if test="exitDate != null" >
+        exit_date,
+      </if>
+      <if test="exitAddress != null" >
+        exit_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="barcode != null" >
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="enterDate != null" >
+        #{enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterAddress != null" >
+        #{enterAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="exitDate != null" >
+        #{exitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exitAddress != null" >
+        #{exitAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sbs.barcode.pojo.TicketRecordExample" resultType="java.lang.Integer" >
+    select count(*) from ticket_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ticket_record
+    <set >
+      <if test="record.barcode != null" >
+        barcode = #{record.barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterDate != null" >
+        enter_date = #{record.enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enterAddress != null" >
+        enter_address = #{record.enterAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exitDate != null" >
+        exit_date = #{record.exitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exitAddress != null" >
+        exit_address = #{record.exitAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ticket_record
+    set barcode = #{record.barcode,jdbcType=VARCHAR},
+      enter_date = #{record.enterDate,jdbcType=TIMESTAMP},
+      enter_address = #{record.enterAddress,jdbcType=VARCHAR},
+      exit_date = #{record.exitDate,jdbcType=TIMESTAMP},
+      exit_address = #{record.exitAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sbs.barcode.pojo.TicketRecord" >
+    update ticket_record
+    <set >
+      <if test="enterAddress != null" >
+        enter_address = #{enterAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="exitDate != null" >
+        exit_date = #{exitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exitAddress != null" >
+        exit_address = #{exitAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where barcode = #{barcode,jdbcType=VARCHAR}
+      and enter_date = #{enterDate,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sbs.barcode.pojo.TicketRecord" >
+    update ticket_record
+    set enter_address = #{enterAddress,jdbcType=VARCHAR},
+      exit_date = #{exitDate,jdbcType=TIMESTAMP},
+      exit_address = #{exitAddress,jdbcType=VARCHAR}
+    where barcode = #{barcode,jdbcType=VARCHAR}
+      and enter_date = #{enterDate,jdbcType=TIMESTAMP}
+  </update>
+</mapper>
